@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     let average = sum / bufferLength;
 
-    return average > 40; //
+    return average > 100; //
   }
 
   function blowOutCandles() {
