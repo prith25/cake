@@ -123,14 +123,15 @@ body {
   border-bottom-right-radius: 60px;
 }
 
+/* Candle and flame remain unchanged */
 .candle {
   background-color: #7B020B;
-  width: 18px;
-  height: 52.5px;
-  border-radius: 9px/4.5px;
-  top: -30px;
+  width: 12px;
+  height: 35px;
+  border-radius: 6px/3px;
+  top: -20px;
   left: 50%;
-  margin-left: -12px;
+  margin-left: -8px;
   z-index: 10;
 }
 .candle:before {
@@ -138,8 +139,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 18px;
-  height: 9px;
+  width: 12px;
+  height: 6px;
   border-radius: 50%;
   background-color: #ad030f;
 }
@@ -151,14 +152,14 @@ body {
 .flame {
   position: absolute;
   background-color: orange;
-  width: 15px;
-  height: 37.5px;
-  border-radius: 12px 12px 12px 12px/30px 30px 12px 12px;
-  top: -51px;
+  width: 10px;
+  height: 25px;
+  border-radius: 8px 8px 8px 8px/20px 20px 8px 8px;
+  top: -34px;
   left: 50%;
-  margin-left: -11.25px;
+  margin-left: -7.5px;
   z-index: 10;
-  box-shadow: 0 0 15px rgba(255, 165, 0, 0.5), 0 0 30px rgba(255, 165, 0, 0.5), 0 0 90px rgba(255, 165, 0, 0.5), 0 0 120px rgba(255, 165, 0, 0.5);
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
   transform-origin: 50% 90%;
   animation: flicker 1s ease-in-out alternate infinite;
 }
@@ -166,22 +167,22 @@ body {
 @keyframes flicker {
   0% {
     transform: skewX(5deg);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.2), 0 0 30px rgba(255, 165, 0, 0.2), 0 0 90px rgba(255, 165, 0, 0.2), 0 0 120px rgba(255, 165, 0, 0.2);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.2), 0 0 20px rgba(255, 165, 0, 0.2), 0 0 60px rgba(255, 165, 0, 0.2), 0 0 80px rgba(255, 165, 0, 0.2);
   }
   25% {
     transform: skewX(-5deg);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.5), 0 0 30px rgba(255, 165, 0, 0.5), 0 0 90px rgba(255, 165, 0, 0.5), 0 0 120px rgba(255, 165, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
   }
   50% {
     transform: skewX(10deg);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.3), 0 0 30px rgba(255, 165, 0, 0.3), 0 0 90px rgba(255, 165, 0, 0.3), 0 0 120px rgba(255, 165, 0, 0.3);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.3), 0 0 20px rgba(255, 165, 0, 0.3), 0 0 60px rgba(255, 165, 0, 0.3), 0 0 80px rgba(255, 165, 0, 0.3);
   }
   75% {
     transform: skewX(-10deg);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.4), 0 0 30px rgba(255, 165, 0, 0.4), 0 0 90px rgba(255, 165, 0, 0.4), 0 0 120px rgba(255, 165, 0, 0.4);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.4), 0 0 20px rgba(255, 165, 0, 0.4), 0 0 60px rgba(255, 165, 0, 0.4), 0 0 80px rgba(255, 165, 0, 0.4);
   }
   100% {
     transform: skewX(5deg);
-    box-shadow: 0 0 15px rgba(255, 165, 0, 0.5), 0 0 30px rgba(255, 165, 0, 0.5), 0 0 90px rgba(255, 165, 0, 0.5), 0 0 120px rgba(255, 165, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
   }
 }
