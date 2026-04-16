@@ -1,5 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const cake = document.querySelector(".cake");
+
+  /* ── Starfield ── */
+  const starsContainer = document.getElementById("stars");
+  for (let i = 0; i < 120; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    const size = Math.random() * 3 + 1;
+    star.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      top: ${Math.random() * 100}%;
+      left: ${Math.random() * 100}%;
+      --d: ${(Math.random() * 3 + 1.5).toFixed(2)}s;
+      animation-delay: ${(Math.random() * 4).toFixed(2)}s;
+    `;
+    starsContainer.appendChild(star);
+  }
+
+  /* ── Cake & candle logic ── */
+  const cake  = document.querySelector(".cake");
+  const icing = document.querySelector(".icing");
   const candleCountDisplay = document.getElementById("candleCount");
   let candles = [];
   let audioContext;
@@ -13,11 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
     candleCountDisplay.textContent = activeCandles;
   }
 
-  function addCandle(left, top) {
+  function addCandle(leftInCake, topInCake) {
     const candle = document.createElement("div");
     candle.className = "candle";
-    candle.style.left = left + "px";
-    candle.style.top = top + "px";
+    candle.style.left = leftInCake + "px";
+    candle.style.top  = topInCake  + "px";
 
     const flame = document.createElement("div");
     flame.className = "flame";
@@ -28,30 +48,37 @@ document.addEventListener("DOMContentLoaded", function () {
     updateCandleCount();
   }
 
-  cake.addEventListener("click", function (event) {
-    const rect = cake.getBoundingClientRect();
-    const left = event.clientX - rect.left;
-    const top = event.clientY - rect.top;
-    addCandle(left, top);
+  icing.addEventListener("click", function (event) {
+    event.stopPropagation();
+
+    /* Check click is inside the icing ellipse */
+    const icingRect = icing.getBoundingClientRect();
+    const cx = icingRect.left + icingRect.width  / 2;
+    const cy = icingRect.top  + icingRect.height / 2;
+    const rx = icingRect.width  / 2 * 0.92; /* slight inset so edge candles don't spill */
+    const ry = icingRect.height / 2 * 0.85;
+    const dx = event.clientX - cx;
+    const dy = event.clientY - cy;
+    if ((dx * dx) / (rx * rx) + (dy * dy) / (ry * ry) > 1) return; /* outside ellipse */
+
+    /* Convert click to cake-relative coordinates */
+    const cakeRect = cake.getBoundingClientRect();
+    const leftInCake = event.clientX - cakeRect.left;
+    const topInCake  = event.clientY - cakeRect.top;
+    addCandle(leftInCake, topInCake);
   });
 
   function isBlowing() {
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
     analyser.getByteFrequencyData(dataArray);
-
     let sum = 0;
-    for (let i = 0; i < bufferLength; i++) {
-      sum += dataArray[i];
-    }
-    let average = sum / bufferLength;
-
-    return average > 100; //
+    for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
+    return (sum / bufferLength) > 100;
   }
 
   function blowOutCandles() {
     let blownOut = 0;
-
     if (isBlowing()) {
       candles.forEach((candle) => {
         if (!candle.classList.contains("out") && Math.random() > 0.5) {
@@ -60,13 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-
-    if (blownOut > 0) {
-      updateCandleCount();
-    }
+    if (blownOut > 0) updateCandleCount();
   }
 
-  if (navigator.mediaDevices.getUserMedia) {
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then(function (stream) {
